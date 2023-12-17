@@ -1,19 +1,19 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: 'Webapp Template',
-  description: 'by MorrisseyBR',
-}
+  title: "Webapp Template",
+  description: "by MorrisseyBR",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="pt-br">
-      <body>{children}</body>
+      <body className="m-auto h-screen max-w-screen-sm">{children}</body>
     </html>
-  )
+  );
 }
