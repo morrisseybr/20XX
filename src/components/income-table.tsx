@@ -4,6 +4,7 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { faker } from "@faker-js/faker";
@@ -55,7 +56,11 @@ export function IncomeTable() {
   const table = useReactTable({
     data,
     columns,
+    state: {
+      sorting: [{ id: "date", desc: true }],
+    },
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   return (

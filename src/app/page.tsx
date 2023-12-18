@@ -3,45 +3,39 @@ import { IncomeTable } from "@/components/income-table";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <>
-      <header className="mb-4 flex items-center justify-between p-4">
-        <h1>20XX</h1>
-        <div className="avatar placeholder">
-          <div className="w-8 rounded-full bg-neutral text-neutral-content">
-            <span className="text-xs">UI</span>
+    <main className="flex flex-col gap-4">
+      <section>
+        <div className="card bg-base-100 shadow-xl">
+          <div className="card-body">
+            <div className="flex items-center justify-between">
+              <h2 className="card-title">
+                <Link href="/income">Receitas</Link>
+              </h2>
+              <Link href="/income/new" className="btn btn-square btn-sm">
+                <Plus />
+              </Link>
+            </div>
+            <IncomeTable />
           </div>
         </div>
-      </header>
-      <main className="flex flex-col gap-4">
-        <section>
-          <div className="card bg-base-100 shadow-xl">
-            <div className="card-body">
-              <div className="flex items-center justify-between">
-                <h2 className="card-title">Receitas</h2>
-                <Link href="/income/new" className="btn btn-square btn-sm">
-                  <Plus />
-                </Link>
-              </div>
-              <IncomeTable />
+      </section>
+      <section>
+        <div className="card bg-base-100 shadow-xl">
+          <div className="card-body">
+            <div className="flex items-center justify-between">
+              <h2 className="card-title">
+                <Link href="/expenses">Despesas</Link>
+              </h2>
+              <Link href="/expenses/new" className="btn btn-square btn-sm">
+                <Plus />
+              </Link>
             </div>
+            <ExpansesTable />
           </div>
-        </section>
-        <section>
-          <div className="card bg-base-100 shadow-xl">
-            <div className="card-body">
-              <div className="flex items-center justify-between">
-                <h2 className="card-title">Despesas</h2>
-                <Link href="/income/new" className="btn btn-square btn-sm">
-                  <Plus />
-                </Link>
-              </div>
-              <ExpansesTable />
-            </div>
-          </div>
-        </section>
-      </main>
-    </>
+        </div>
+      </section>
+    </main>
   );
 }

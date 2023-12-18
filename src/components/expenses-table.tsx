@@ -5,12 +5,14 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { faker } from "@faker-js/faker";
 import moment from "moment";
 import "moment/locale/pt-br";
 import { useEffect, useState } from "react";
+import currency from "currency.js";
 
 moment.locale("pt-br");
 
@@ -21,11 +23,18 @@ const columns = [
     header: "Descrição",
   }),
   expenseColumnHelper.accessor("amount", {
+    id: "amount",
     header: "Valor",
+    cell: (cell) =>
+      currency(cell.getValue(), {
+        symbol: "R$",
+        separator: ".",
+        decimal: ",",
+      }).format(),
   }),
   expenseColumnHelper.accessor("date", {
-    cell: (cell) => moment(cell.getValue()).calendar(),
     header: "Data",
+    cell: (cell) => moment(cell.getValue()).calendar(),
   }),
 ];
 
@@ -49,7 +58,11 @@ export function ExpansesTable() {
   const table = useReactTable({
     data,
     columns,
+    state: {
+      sorting: [{ id: "date", desc: true }],
+    },
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   return (
@@ -59,7 +72,11 @@ export function ExpansesTable() {
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>
+                <th
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                  className="cursor-pointer"
+                >
                   {header.isPlaceholder
                     ? null
                     : flexRender(
