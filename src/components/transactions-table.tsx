@@ -1,6 +1,6 @@
 "use client";
 
-import { Expense } from "@/model/Expense";
+import { Transaction } from "@/model/Transaction";
 import {
   createColumnHelper,
   flexRender,
@@ -16,13 +16,13 @@ import currency from "currency.js";
 
 moment.locale("pt-br");
 
-const expenseColumnHelper = createColumnHelper<Expense>();
+const columnsHelper = createColumnHelper<Transaction>();
 
 const columns = [
-  expenseColumnHelper.accessor("description", {
+  columnsHelper.accessor("description", {
     header: "Descrição",
   }),
-  expenseColumnHelper.accessor("amount", {
+  columnsHelper.accessor("amount", {
     id: "amount",
     header: "Valor",
     cell: (cell) =>
@@ -32,24 +32,26 @@ const columns = [
         decimal: ",",
       }).format(),
   }),
-  expenseColumnHelper.accessor("date", {
+  columnsHelper.accessor("date", {
     header: "Data",
     cell: (cell) => moment(cell.getValue()).calendar(),
   }),
 ];
 
-function generateData() {
+function generateData(): Transaction[] {
   return Array.from({ length: 10 }, () => ({
     id: faker.string.uuid(),
+    userId: faker.string.uuid(),
     description: faker.commerce.productName(),
     category: faker.commerce.department(),
     amount: faker.number.int({ min: 10, max: 1000 }),
     date: faker.date.recent({ days: 10 }),
+    isIncome: faker.datatype.boolean(),
   }));
 }
 
-export function ExpansesTable() {
-  const [data, setData] = useState<Expense[]>([]);
+export function TransactionsTable() {
+  const [data, setData] = useState<Transaction[]>([]);
 
   useEffect(() => {
     setData(generateData());

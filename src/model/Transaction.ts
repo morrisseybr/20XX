@@ -1,11 +1,13 @@
 import { z } from "zod";
 
-export const ExpenseSchema = z.object({
+export const TransactionSchema = z.object({
   id: z.string(),
+  userId: z.string(),
   description: z.string(),
   category: z.string(),
   amount: z.number().nonnegative(),
   date: z.date(),
+  isIncome: z.boolean(),
 });
 
-export type Expense = z.infer<typeof ExpenseSchema>;
+export type Transaction = z.infer<typeof TransactionSchema>;
