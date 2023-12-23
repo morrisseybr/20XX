@@ -3,7 +3,11 @@ import SuperJSON from "superjson";
 
 // create a context to be accessed on every route
 export const createContext = async () => {
-  return {};
+  return {
+    firebaseAdmin: await import("../config/firebase-admin").then(
+      (mod) => mod.default,
+    ),
+  };
 };
 
 // initialize trpc with superjson
